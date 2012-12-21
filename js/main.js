@@ -38,16 +38,6 @@ $(function(){
     $('.generator form').on('submit', function(e){
         e.preventDefault();
         shortenUrl(generateMsgUrl());
-        $('.twitter').html('<a href="https://twitter.com/share" class="twitter-share-button" data-url="' + generateMsgUrl() + '" data-size="large">Tweet</a>');
-	    !function(d,s,id) {
-		    var js,fjs=d.getElementsByTagName(s)[0];
-	        if (!d.getElementById(id)){
-		        js=d.createElement(s);
-		        js.id=id;
-		        js.src="//platform.twitter.com/widgets.js";
-		        fjs.parentNode.insertBefore(js,fjs);
-	        }
-	    }(document,"script","twitter-wjs");
     })
 });
 
@@ -123,31 +113,24 @@ function shortenUrl(url) {
             'url': url
         },
         success: function(data){
-            $('.popup').addClass('visible').find('.url').text(data.shorturl);
+            $('.popup').showShortUrl(data.shorturl);
+	        $('.twitter').generateTwitterButton(data.shorturl);
         },
         error: function(){
-            $('.popup').addClass('visible').find('.url').text(url);
+	        $('.popup').showShortUrl(url);
+	        $('.twitter').generateTwitterButton(url);
         }
     });
 }
-
-$.fn.selectText = function() {
-    var text = this[0],
-        range,
-        selection;
-    if (document.body.createTextRange) { //ms
-        range = document.body.createTextRange();
-        range.moveToElementText(text);
-        range.select();
-    } else if (window.getSelection) { //all others
-        selection = window.getSelection();
-        range = document.createRange();
-        range.selectNodeContents(text);
-        selection.removeAllRanges();
-        selection.addRange(range);
-    }
+$.fn.showShortUrl = function(url) {
+	$(this).addClass('visible').find('.url').text(url);
+	return this;
 }
-
+$.fn.generateTwitterButton = function(url) {
+	$(this).html('<a href="https://twitter.com/share" class="twitter-share-button" data-url="' + url + '" data-size="large">Tweet</a>');
+	$('body').append('<script src="http://platform.twitter.com/widgets.js"></script>');
+	return this;
+}
 $.fn.randomPos = function() {
     var elemWidth = $(this).width(),
         elemHeight = $(this).height(),
@@ -164,5 +147,5 @@ $.fn.randomPos = function() {
     });
 }
 function generateMsgUrl() {
-    return encodeURIComponent('http://' + window.location.host + window.location.pathname + '?msg='+$('.generator .new-msg').val());
+    return 'http://' + window.location.host + window.location.pathname + '?msg='+$('.generator .new-msg').val();
 }
