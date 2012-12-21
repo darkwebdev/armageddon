@@ -3,7 +3,6 @@ $.scrollingParallax('img/bg-tile.png', {
     disableIE6: true,
     bgRepeat: true
 });
-preload(['img/stars-sprite.png']);
 
 $(function(){
 
@@ -12,6 +11,8 @@ $(function(){
     /* Preload graphics*/
 
     preload([
+	    'img/bg-tile.png',
+	    'img/stars-sprite.png',
 //        'img/explosion-1.png',
         'img/explosion-2.png',
         'img/explosion-3.jpg'
@@ -32,10 +33,21 @@ $(function(){
         $('.message').text(msg);
     }
 
+	/* Generate custom message link */
+
     $('.generator form').on('submit', function(e){
         e.preventDefault();
         shortenUrl(generateMsgUrl());
-        $('.twitter a').data('url', generateMsgUrl());
+        $('.twitter').html('<a href="https://twitter.com/share" class="twitter-share-button" data-url="' + generateMsgUrl() + '" data-size="large">Tweet</a>');
+	    !function(d,s,id) {
+		    var js,fjs=d.getElementsByTagName(s)[0];
+	        if (!d.getElementById(id)){
+		        js=d.createElement(s);
+		        js.id=id;
+		        js.src="//platform.twitter.com/widgets.js";
+		        fjs.parentNode.insertBefore(js,fjs);
+	        }
+	    }(document,"script","twitter-wjs");
     })
 });
 
