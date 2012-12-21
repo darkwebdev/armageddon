@@ -123,7 +123,6 @@ function shortenUrl(url) {
             'url': url
         },
         success: function(data){
-            console.log(data.shorturl);
             $('.popup').addClass('visible').find('.url').text(data.shorturl);
         },
         error: function(){
@@ -165,5 +164,5 @@ $.fn.randomPos = function() {
     });
 }
 function generateMsgUrl() {
-    return 'http://' + window.location.host + window.location.pathname + '?msg='+$('.generator .new-msg').val();
+    return encodeURIComponent('http://' + window.location.host + window.location.pathname + '?msg='+$('.generator .new-msg').val());
 }
