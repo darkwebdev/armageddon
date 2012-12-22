@@ -4,7 +4,9 @@ $.scrollingParallax('img/bg-tile.png', {
 });
 
 $(function() {
-    $(document).scrollTop(0);
+    setTimeout(function(){
+        $(document).scrollTop(0);
+    }, 200);
 
 	$('.star').randomPos();
 
@@ -51,8 +53,9 @@ $(function() {
 
 function scrollHandler() {
     $('.hint').removeClass('visible');
-
-	var delta = document.body.offsetHeight - $('.meteor').offset().top - 700;
+    var shift = ($.browser.webkit && !(/chrome/.test(navigator.userAgent.toLowerCase()))) ? 750 : 700,
+        delta = document.body.offsetHeight - $('.meteor').offset().top - shift;
+    console.log(delta, shift);
 
 	if (delta > 2100) {
 		// in outer space
