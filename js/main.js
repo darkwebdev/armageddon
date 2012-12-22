@@ -37,7 +37,12 @@ $(function() {
 	$('.generator form').on('submit', function(e) {
 		e.preventDefault();
 		shortenUrl(generateMsgUrl());
-	})
+	});
+
+    $('.once-more').on('click', function(e) {
+        e.preventDefault();
+        onceMore();
+    });
 });
 
 function scrollHandler() {
@@ -45,48 +50,28 @@ function scrollHandler() {
 
 	if (delta > 2100) {
 		// in outer space
-		$('.futurama').removeClass('crash');
 	} else if (delta > 1560) {
 		$('.futurama').addClass('crash');
-		$('.kenny').removeClass('crash');
 	} else if (delta > 1250) {
 		$('.kenny').addClass('crash');
-		$('.hammer').removeClass('crash');
 	} else if (delta > 670) {
 		$('.hammer').addClass('crash');
-		$('.moon').removeClass('crash');
 	} else if (delta > 100) {
 		// hit atmosphere
 		$('.moon').addClass('crash').children('.moon-full').removeClass('visible');
-		$('.explosion-1').removeClass('visible');
-		$('.meteor').removeClass('pause');
-		$('.fire-1').removeClass('blink');
-		$('.fire-2').removeClass('blink-2');
-	} else if (delta > 0) {
+	} else if (delta > -100) {
 		// dig into the planet
 		$('.meteor').addClass('visible pause');
 		$('.earth').addClass('visible');
-		$('.explosion-1').addClass('visible');
-		$('.explosion-2').removeClass('visible');
-		$('.explosion-3').removeClass('visible');
-		$('.continuum, body>div:first-child').removeClass('shake');
-		$('.overlay').removeClass('visible').find('.popup').removeClass('visible');
 		$('.fire-1').addClass('blink');
 		$('.fire-2').addClass('blink-2');
-	} else if ($('.explosion-1').hasClass('visible')) {
+	} else {
 		// planet chain explosion
 		$('.meteor').removeClass('visible');
 		$('.earth').removeClass('visible');
-		$('.explosion-1').removeClass('visible');
 		$('.explosion-2').addClass('visible');
-		if (!$('.explosion-3').hasClass('visible')) {
-			setTimeout(function() {
-				$('.explosion-2').removeClass('visible');
-				$('.explosion-3').addClass('visible');
-				$('.continuum, body>div:first-child').addClass('shake');
-				$('.overlay').addClass('visible');
-			}, 500);
-		}
+        $('.overlay').addClass('visible').children('.overlay-content').addClass('visible');
+        $('.continuum, body>div:first-child').addClass('shake');
 	}
 }
 
@@ -121,11 +106,12 @@ function shortenUrl(url) {
 	});
 }
 $.fn.showShortUrl = function(url) {
+    $('.popup-overlay').addClass('visible');
 	$(this).addClass('visible').find('.url').text(url);
 	return this;
 }
 $.fn.generateTwitterButton = function(url) {
-	$(this).html('<a href="https://twitter.com/share" class="twitter-share-button" data-url="' + url + '" data-size="large">Tweet</a>');
+	$(this).html('<a href="https://twitter.com/share" class="twitter-share-button" data-url="' + url + '" data-size="large"></a>');
 	$('body').append('<script src="http://platform.twitter.com/widgets.js"></script>');
 	return this;
 }
@@ -146,4 +132,9 @@ $.fn.randomPos = function() {
 }
 function generateMsgUrl() {
 	return 'http://' + window.location.host + window.location.pathname + '?msg=' + $('.generator .new-msg').val();
+}
+
+function onceMore() {
+    $(document).scrollTop(0);
+    window.location.reload();
 }
