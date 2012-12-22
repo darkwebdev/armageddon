@@ -50,6 +50,8 @@ $(function() {
 });
 
 function scrollHandler() {
+    $('.hint').removeClass('visible');
+
 	var delta = document.body.offsetHeight - $('.meteor').offset().top - 700;
 
 	if (delta > 2100) {
@@ -76,6 +78,9 @@ function scrollHandler() {
 		$('.explosion-2').addClass('visible');
         $('.overlay').addClass('visible').children('.overlay-content').addClass('visible');
         $('.continuum, body>div:first-child').addClass('shake');
+        setTimeout(function(){
+            $('body').removeClass('scrollable');
+        }, 500);
 	}
 }
 
@@ -115,7 +120,7 @@ $.fn.showShortUrl = function(url) {
 	return this;
 }
 $.fn.generateTwitterButton = function(url) {
-	$(this).html('<a href="https://twitter.com/share" class="twitter-share-button" data-url="' + url + '" data-size="large"></a>');
+	$(this).html('<a href="https://twitter.com/share" class="twitter-share-button" data-count="none" data-url="' + url + '" data-size="large"></a>');
 	$('body').append('<script src="http://platform.twitter.com/widgets.js"></script>');
 	return this;
 }

@@ -1,7 +1,20 @@
 body {
-	overflow-x: hidden;
+	overflow: hidden;
 	margin: 0;
 	color: #fff;
+}
+.scrollable {
+    overflow-y: auto;
+}
+.hint {
+    position: absolute;
+    bottom: 430px;
+    left: 50%;
+    margin-left: 150px;
+    opacity: 0;
+    -webkit-transition: opacity 1s;
+    -moz-transition: opacity 1s;
+    transition: opacity 1s;
 }
 .continuum {
 	position: relative;
