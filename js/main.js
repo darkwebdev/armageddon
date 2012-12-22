@@ -110,6 +110,7 @@ function shortenUrl(url) {
 		success: function(data) {
 			$('.popup').showShortUrl(data.shorturl);
 			$('.twitter').generateTwitterButton(data.shorturl);
+			yaCounter18982786.reachGoal('generate');
 		},
 		error: function() {
 			$('.popup').showShortUrl(url);
