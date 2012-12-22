@@ -4,6 +4,7 @@ $.scrollingParallax('img/bg-tile.png', {
 });
 
 $(function() {
+    $(document).scrollTop(0);
 
 	$('.star').randomPos();
 
