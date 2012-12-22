@@ -34,7 +34,10 @@ $(function() {
 
 	/* Generate custom message link */
 
-	$('.generator form').on('submit', function(e) {
+	$('.new-msg').on('change, click, paste, keydown, keyup', function(){
+        $('.message').text($(this).val());
+    })
+    $('.generator form').on('submit', function(e) {
 		e.preventDefault();
 		shortenUrl(generateMsgUrl());
 	});
